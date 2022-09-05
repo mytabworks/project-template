@@ -1,0 +1,16 @@
+.grid-switching {
+    .is-ember {
+        opacity: 0.3;
+    }
+    
+    .is-droppable {
+        border: 2px dashed darken($color: #dee2e6, $amount: 30);
+    }
+    
+    .is-grabbed {
+        cursor: grabbing;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 0 20px 5px rgba($color: #000000, $alpha: 0.05);
+    }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "event-creatives",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "bootstrap": "^5.2.0",
+    "classnames": "^2.3.1",
+    "eloquents": "^0.2.4",
+    "formydable": "^1.5.2",
+    "next": "12.2.4",
+    "pg": "^8.8.0",
+    "react": "18.2.0",
+    "react-bootstrap": "^2.5.0",
+    "react-dom": "18.2.0",
+    "reflect-metadata": "^0.1.13",
+    "retoast": "^0.1.5",
+    "sass": "^1.54.3",
+    "typeorm": "^0.3.9",
+    "validozer": "^1.0.5",
+    "world-trigger": "^1.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.13",
+    "@babel/plugin-proposal-decorators": "^7.18.10",
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.18.6",
+    "@types/glob": "^8.0.0",
+    "@types/node": "^18.7.14",
+    "@types/react": "18.0.16",
+    "@types/react-dom": "18.0.6",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
+    "eslint": "8.21.0",
+    "eslint-config-next": "12.2.4",
+    "typescript": "4.7.4"
+  }
+}

@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./",
+      "paths": { 
+        "@components/*": ["./ux/components/*"],
+        "@styles/*": ["./ux/assets/styles/*"],
+        "@images/*": ["./ux/assets/images/*"],
+        "@utils/*": ["./ux/common/utils/*"],
+        "@hooks/*": ["./ux/common/hooks/*"],
+        "@config/*": ["./ux/config/*"],
+        "@entity/*": ["./server/entity/*"],
+        "@migration/*": ["./server/migration/*"],
+        "@model/*": ["./server/model/*"],
+        "@controller/*": ["./server/controller/*"],
+        "@middleware/*": ["./server/middleware/*"],
+        "@route": ["./server/route"]
+      }
+    }
+}
