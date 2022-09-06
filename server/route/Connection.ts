@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { setDataSource } from "eloquents"
+import { ConnectionPool, setDataSource } from "eloquents"
 import { DataSource } from "typeorm"
 import config from "eloquent.config"
 import * as Entities from "@entity/index"
@@ -8,17 +8,23 @@ const options: any = config
 
 options.entities = Object.values(Entities)
 
-export class Connection {
+class Connection {
     
     public static connected: boolean = false
 
-    public static async handle(request: NextApiRequest, response: NextApiResponse<any>) {
+    public static initialize: boolean = false
+
+    public static awaitInitialization: Promise<void>;
+
+    public static async createIfNotExists() {
         
-        if(this.connected === false) {
-        
+        if(this.connected === false && this.initialize === false) {
+            
+            this.initialize = true
+
             const dataSource = new DataSource(options)
     
-            await dataSource.initialize().then(() => {
+            this.awaitInitialization = dataSource.initialize().then(() => {
 
                 console.log("Data Source is connected")
 
@@ -26,11 +32,22 @@ export class Connection {
                 
                 console.error("Data Source Error: " + err)
             })
+
+            await this.awaitInitialization
             
             setDataSource('default', dataSource)
     
             this.connected = true
+
+        } else if(this.connected === false && this.initialize === true) {
+
+            await this.awaitInitialization
+
         }
+
+        return true
     }
 
 }
+
+export default Connection
