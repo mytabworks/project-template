@@ -25,13 +25,13 @@ class UserController extends BaseController {
                 .cache(60000)
                 .get()
                 
-            return response.status(200).send({
+            return response.status(200).json({
                 success: true,
                 data: user
             });
         } catch (error) {
             
-            return response.status(500).send({
+            return response.status(500).json({
                 success: false,
                 message: error.message
             });
@@ -49,23 +49,23 @@ class UserController extends BaseController {
             const user = await User.find(id)
 
             if(!user.hasItem) {
-                response.status(200).send({
+                response.status(200).json({
                     success: false,
                     message: `User Not Found`
                 })
             }
 
-            return response.status(200).send({
+            response.status(200).json({
                 success: true,
                 data: user.toJSON(),
             })
 
         } catch (error) {
             
-            return response.status(500).send({
+            return response.status(500).json({
                 success: false,
                 message: error.message
-            });
+            })
         }
     }
 
@@ -92,7 +92,7 @@ class UserController extends BaseController {
         if(validator.fails()) {
             const errors = validator.errorsJSON()
 
-            return response.status(200).send({
+            return response.status(200).json({
                 success: false,
                 errors
             })
@@ -114,14 +114,14 @@ class UserController extends BaseController {
 
             await userRole.save()
 
-            return response.status(201).send({
+            return response.status(201).json({
                 success: true,
                 id: user.id,
                 message: `User created successfully`
             })
         } catch (error) {
             
-            return response.status(500).send({
+            return response.status(500).json({
                 success: false,
                 message: error.message
             })
@@ -154,7 +154,7 @@ class UserController extends BaseController {
 
             const errors = validator.errorsJSON()
 
-            return response.status(200).send({
+            return response.status(200).json({
                 success: false,
                 errors
             })
@@ -168,7 +168,7 @@ class UserController extends BaseController {
             const user = await User.find(id)
 
             if(!user.hasItem) {
-                return response.status(404).send({
+                return response.status(404).json({
                     success: false,
                     message: `User Not Found`
                 });
@@ -183,14 +183,14 @@ class UserController extends BaseController {
 
             await userRole.save()
 
-            return response.status(200).send({
+            return response.status(200).json({
                 success: true,
                 id: user.id,
                 message: `User updated successfully`
             })
         } catch (error) {
             
-            return response.status(500).send({
+            return response.status(500).json({
                 success: false,
                 message: error.message
             })
@@ -211,14 +211,14 @@ class UserController extends BaseController {
             await connectionPool.open()
             await User.findAndDelete(id, ['activities', 'roles'])
 
-            return response.status(200).send({
+            return response.status(200).json({
                 success: true,
                 message: `User deleted successfully`
             })
 
         } catch (error) {
             
-            return response.status(500).send({
+            return response.status(500).json({
                 success: false,
                 message: error.message
             })
