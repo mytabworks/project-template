@@ -2,24 +2,44 @@ import BaseController from "@controller/BaseController"
 import { NextApiRequest, NextApiResponse } from "next"
 import Illusion from "illusionjs"
 import * as AllMiddlewares from "@middleware/index"
+import Connection from "./Connection"
 
 type LowercaseKeys<R> = keyof { 
     [P in keyof R as `${Lowercase<P & string>}`]?: R;
 }
 
+type RouteMiddlewareTypes = (LowercaseKeys<typeof AllMiddlewares> | Record<LowercaseKeys<typeof AllMiddlewares>, any>)
+
 type RequestMethodType = ("GET" | "POST" | "PUT" | "PATCH" | "DELETE")
 
 class Route {
 
-    protected middlewares?: string[]
+    protected middlewares?: { name: LowercaseKeys<typeof AllMiddlewares>, parameter: any }[]
 
     /**
      * 
      * @param middlewares 
      */
-    public middleware(middlewares: LowercaseKeys<typeof AllMiddlewares>[]) {
+    public middleware(middlewares: RouteMiddlewareTypes[]) {
         
-        this.middlewares = middlewares
+        this.middlewares = middlewares.map((middleware) => {
+
+            if(typeof middleware === 'string') {
+                
+                return {
+                    name: middleware as LowercaseKeys<typeof AllMiddlewares>,
+                    parameter: null
+                }
+
+            } else {
+                const name = Object.keys(middleware)[0]
+
+                return {
+                    name: name as LowercaseKeys<typeof AllMiddlewares>,
+                    parameter: middleware[name as keyof typeof middleware]
+                }
+            }
+        })
 
         return this
     }
@@ -33,13 +53,15 @@ class Route {
         
         if(Array.isArray(this.middlewares) && this.middlewares.length > 0) {
                 
-            await Promise.all(this.middlewares.map((middleware) => {
+            return await Promise.all(this.middlewares.map((middleware) => {
                 return AllMiddlewares[
-                    middleware.replace(/^([a-z])/, (_, capital) => `${capital.toUpperCase()}`) as keyof typeof AllMiddlewares
+                    middleware.name.replace(/^([a-z])/, (_, capital) => `${capital.toUpperCase()}`) as keyof typeof AllMiddlewares
                 ]
-                .handle(request, response)
+                .handle(request, response, middleware.parameter)
             }))
         }
+
+        return [true]
     }
 
     /**
@@ -56,31 +78,38 @@ class Route {
 
             }
 
-            await this.invokeMiddlewares(request, response)
+            // elequent or typeorm initialize database if not yet initiallize
+            await Connection.createIfNotExists()
+
+            // if there is a middleware that return false, this will prevent to proceed any further
+            if((await this.invokeMiddlewares(request, response)).some(proceed => proceed === false)) {
+                
+                return;
+            }
             
             switch (request.method) {
                 case "GET":
                     const { id } = request.query
     
                     if(!!id) {
-                        controller.show(request, response)
+                        await controller.show(request, response)
     
                     } else {
-                        controller.index(request, response)
+                        await controller.index(request, response)
     
                     }
                     
                     break;
                 case "POST":
     
-                    controller.create(request, response)
+                    await controller.create(request, response)
                     
                     break;
                 case "PUT":
                 case "PATCH":
     
                     if(!!id) {
-                        controller.update(request, response)
+                        await controller.update(request, response)
     
                     } else {
                         this.badRequest(response)
@@ -91,7 +120,7 @@ class Route {
                 case "DELETE":
     
                     if(!!id) {
-                        controller.destroy(request, response)
+                        await controller.destroy(request, response)
     
                     } else {
                         this.badRequest(response)
@@ -170,15 +199,37 @@ class Route {
 
             if(request.method === requestMethod) {
 
-                await this.invokeMiddlewares(request, response)
+                // elequent or typeorm initialize database if not yet initiallize
+                await Connection.createIfNotExists()
+
+                // if there is a middleware that return false, this will prevent to proceed any further
+                if((await this.invokeMiddlewares(request, response)).some(proceed => proceed === false)) {
+                    
+                    return;
+                }
 
                 //@ts-ignore
-                controller[controllerMethod](request, response)
+                await controller[controllerMethod](request, response)
 
             } else {
 
                 this.notAllowed(response)
             }
+
+        }
+    }
+
+    /**
+     * 
+     * @param middlewares 
+     */
+    public custom<P extends ((request: NextApiRequest, response: NextApiResponse<any>) => Promise<void>)>(route: P) {
+
+        return async (request: NextApiRequest, response: NextApiResponse<any>) => {
+
+            await Connection.createIfNotExists()
+
+            await route(request, response)
 
         }
     }
