@@ -12,13 +12,11 @@ const Layout: React.FunctionComponent<LayoutProps> = (props) => {
 		request.call().then(() => {
 
         })
-        
-        return () => alert("unmounted")
     }, [])
     
     return (
         <>
-            sampless
+        
         </>
     )
 }
