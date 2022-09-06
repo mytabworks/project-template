@@ -3,9 +3,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@styles/Home.module.css'
 import Layout from '@components/custom/Layout'
+import { useSession, signIn, signOut } from "next-auth/react"
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
-
+	const router = useRouter()
+	const { status, data } = useSession()
+	const isAuth = status === "authenticated"
 	return (
 		<div className={styles.container}>
 			<Layout/>
@@ -17,12 +21,14 @@ const Home: NextPage = () => {
 
 			<main className={styles.main}>
 				<h1 className={styles.title}>
-				Welcome to <a href="https://nextjs.org">Next.js!</a>
+				Welcome to <a href="#" onClick={(e) => {
+					e.preventDefault()
+					router.push('/hello')
+				}}>Home</a>
 				</h1>
-
+				<button type="button" onClick={() => isAuth ? signOut() : signIn()}>Sign {isAuth ? 'out' : 'in'}</button>
 				<p className={styles.description}>
-				Get started by editing{' '}
-				<code className={styles.code}>pages/index.tsx</code>
+				Get started <b className="text-danger">{data?.user?.name}</b>
 				</p>
 
 				<div className={styles.grid}>

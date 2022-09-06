@@ -15,6 +15,7 @@
     "eloquents": "^0.2.4",
     "formydable": "^1.5.2",
     "next": "12.2.4",
+    "next-auth": "^4.10.3",
     "pg": "^8.8.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.5.0",
