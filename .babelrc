@@ -18,6 +18,7 @@
       "root": ["./"],
       "alias": {
         "@components": "./ux/components",
+        "@client": "./ux/client",
         "@utils": "./ux/common/utils",
         "@hooks": "./ux/common/hooks",
         "@styles": "./ux/assets/styles",
