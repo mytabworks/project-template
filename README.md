@@ -3,14 +3,14 @@ This is a template for nextjs setup with typeorm sits on eloquent
 
 ## todo
 
-1. jwt accessing
-2. auth middleware with roles
+1. jwt accessing - done
+2. auth middleware with roles - done
 3. file system upload and download
 4. set components
 5. soft deleting
 6. eloquents created_at and updated_at change to actual date
 7. email invite and email templating
-8. Oauth integration
+8. Oauth integration - partial
 
 ## triage
 
