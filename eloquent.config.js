@@ -8,17 +8,17 @@ module.exports = {
 	"synchronize": process.env.DB_SYNCHRONIZE,
 	"logging": process.env.DB_LOGGING,
 	"entities": [
-		"src/entities/**/*.ts"
+		"server/entity/**/*.ts"
 	],
 	"migrations": [
-		"src/migration/**/*.ts"
+		"server/migration/**/*.ts"
 	],
 	"subscribers": [
-		"src/subscriber/**/*.ts"
+		"server/subscriber/**/*.ts"
 	],
 	"cli": {
-		"entitiesDir": "src/entity",
-		"migrationsDir": "src/migration",
-		"subscribersDir": "src/subscriber"
+		"entitiesDir": "server/entity",
+		"migrationsDir": "server/migration",
+		"subscribersDir": "server/subscriber"
 	}
 }
