@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn} from "typeorm";
 
 @Entity("user")
 export class User {
@@ -27,10 +27,10 @@ export class User {
     })
     email_verified!: boolean;
 
-    @Column('bigint')
-    created_at!: number;
-
-    @Column('bigint')
+    @UpdateDateColumn()
     updated_at!: number;
+    
+    @CreateDateColumn()
+    created_at!: number;
 
 }

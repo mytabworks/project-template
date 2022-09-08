@@ -23,6 +23,10 @@ class User extends Model {
         'email_verified',
     ]
 
+    protected guarded = [
+        'password'
+    ]
+
     public activities() {
         return this.hasMany(Activity)
     }

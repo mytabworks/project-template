@@ -1155,10 +1155,10 @@ electron-to-chromium@^1.4.202:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.241.tgz#5aa03ab94db590d8269f4518157c24b1efad34d6"
   integrity sha512-e7Wsh4ilaioBZ5bMm6+F4V5c11dh56/5Jwz7Hl5Tu1J7cnB+Pqx5qIF2iC7HPpfyQMqGSvvLP5bBAIDd2gAtGw==
 
-eloquents@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/eloquents/-/eloquents-0.2.4.tgz#d08f496d2509625d255279810c7050b7aded5f89"
-  integrity sha512-kyw94TqOb+yfpSp3FJOr9vZedBYd0sz6Oga3HU2BJmb7ttF7s3jiZIiZYoVs/AwXBrleyVaEyPUPKjE+Q7C45g==
+eloquents@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/eloquents/-/eloquents-0.2.5.tgz#979fa79b3125cd862a10ea783baa7022fc7e2889"
+  integrity sha512-SI69JdrU2K9b8ZgI3EmpfeK9B92JSOvGUoEsrXZ9A110IzzfAlpREWsqFx/Oo3A8GWPiIqNSANKB4vhT6Z+/3Q==
   dependencies:
     app-root-path "^3.1.0"
     illusionjs "^1.0.1"
