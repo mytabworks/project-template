@@ -1,5 +1,5 @@
 # project-template
-This is a template for nextjs setup with typeorm sits on eloquent
+This is a template for nextjs + rest endpoint setup with typeorm sits on eloquent
 
 ## migration scripts
 The package script will only run on npm don't you ever use yarn on migration
