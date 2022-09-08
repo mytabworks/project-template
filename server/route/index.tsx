@@ -86,10 +86,11 @@ class Route {
                 
                 return;
             }
+
+            const { id } = request.query
             
             switch (request.method) {
                 case "GET":
-                    const { id } = request.query
     
                     if(!!id) {
                         await controller.show(request, response)
