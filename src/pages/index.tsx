@@ -11,12 +11,12 @@ import { useAPI } from '@hooks/useAPI'
 const Home: NextPage = (props) => {
 	const router = useRouter()
 	const { status, data } = useSession()
-	const request = useAPI(`/api/user/${data?.user.id}`, { method: "DELETE" })
+	const request = useAPI(`/api/user/${data?.user.id}`, { method: "GET" })
 	const handleDeleteThisAccount = (event: any) => {
 		event.preventDefault()
 		request.call().then((response) => {
 			if(response.data.success) {
-				signOut({ redirect: true, callbackUrl: '/api/auth/signin' })
+				// signOut({ redirect: true, callbackUrl: '/api/auth/signin' })
 			}
 		})
 	}
@@ -36,7 +36,7 @@ const Home: NextPage = (props) => {
 				<div className="d-flex justify-content-center">
 					<div className="text-center">
 						<img src={data?.user.profile_img} className="d-block mb-5"/>
-						<Button onClick={handleDeleteThisAccount}>{request.loading && (<Spinner animation="border" size="sm"/>)} Delete this Account</Button>
+						<Button onClick={handleDeleteThisAccount}>{request.loading && (<Spinner animation="border" size="sm"/>)} GET this Account</Button>
 					</div>
 				</div>
 			</main>

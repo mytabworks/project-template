@@ -17,19 +17,19 @@
     ["module-resolver", {
       "root": ["./"],
       "alias": {
-        "@components": "./ux/components",
-        "@client": "./ux/client",
-        "@utils": "./ux/common/utils",
-        "@hooks": "./ux/common/hooks",
-        "@styles": "./ux/assets/styles",
-        "@images": "./ux/assets/images",
-        "@config/*": "./ux/config/*",
-        "@entity/*": "./server/entity/*",
-        "@migration/*": "./server/migration/*",
-        "@model/*": "./server/model/*",
-        "@controller/*": "./server/controller/*",
-        "@middleware/*": "./server/middleware/*",
-        "@route": "./server/route"
+        "@components": "./src/ux/components",
+        "@client": "./src/ux/client",
+        "@utils": "./src/ux/common/utils",
+        "@hooks": "./src/ux/common/hooks",
+        "@styles": "./src/ux/assets/styles",
+        "@images": "./src/ux/assets/images",
+        "@config/*": "./src/ux/config/*",
+        "@entity/*": "./src/server/entity/*",
+        "@migration/*": "./src/server/migration/*",
+        "@model/*": "./src/server/model/*",
+        "@controller/*": "./src/server/controller/*",
+        "@middleware/*": "./src/server/middleware/*",
+        "@route": "./src/server/route"
       }
     }]
   ]
