@@ -43,6 +43,8 @@ class Connection {
 
             await this.awaitInitialization
 
+            this.connected = true
+
         }
 
         return true
