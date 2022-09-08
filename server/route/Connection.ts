@@ -29,8 +29,8 @@ class Connection {
                 console.log("Data Source is connected")
 
             }).catch((err) => {
-                
                 console.error("Data Source Error: " + err)
+                console.error(err)
             })
 
             await this.awaitInitialization
