@@ -1,5 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next"
-import { ConnectionPool, setDataSource } from "eloquents"
+import { setDataSource } from "eloquents"
 import { DataSource } from "typeorm"
 import config from "eloquent.config"
 import * as Entities from "@entity/index"
@@ -16,7 +15,7 @@ class Connection {
 
     public static awaitInitialization: Promise<void>;
 
-    public static async createIfNotExists() {
+    public static async createIfNotExists(datasource: string = 'default') {
         
         if(this.connected === false && this.initialize === false) {
             
@@ -35,7 +34,7 @@ class Connection {
 
             await this.awaitInitialization
             
-            setDataSource('default', dataSource)
+            setDataSource(datasource, dataSource)
     
             this.connected = true
 

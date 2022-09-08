@@ -14,7 +14,10 @@
         "@model/*": ["./src/server/model/*"],
         "@controller/*": ["./src/server/controller/*"],
         "@middleware/*": ["./src/server/middleware/*"],
-        "@route": ["./src/server/route"]
+        "@middleware": ["./src/server/middleware"],
+        "@route/*": ["./src/server/route/*"],
+        "@route": ["./src/server/route"],
+        "@server-utils/*": ["./src/server/utils/*"]
       }
     }
 }

@@ -1,8 +1,12 @@
-import { Session } from "@middleware/Auth"
-import { getSession } from "next-auth/react"
+import { Session } from '@server-utils/session';
 import Illusion from 'illusionjs'
+import { getSession } from 'next-auth/react';
 
-const nextauth_url = process.env.NEXT_PUBLIC_API_URL
+export const getBaseUrl = () => {
+	if (typeof window !== "undefined") return window.location.origin; // browser should use relative url
+	if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
+	return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
+};
 class ClientMiddleware {
 
 	protected authorizeRoleIDs: number[] = [];
@@ -37,7 +41,7 @@ class ClientMiddleware {
 					
 					return {
 						redirect: {
-							destination: this.failRedirects[role] || this.failRedirects?.default || `/api/auth/signin?callbackUrl=${nextauth_url}`,
+							destination: this.failRedirects[role] || this.failRedirects?.default || `/api/auth/signin?callbackUrl=${getBaseUrl()}`,
 							permanent: false
 						}
 					}
@@ -46,7 +50,7 @@ class ClientMiddleware {
 					
 					return {
 						redirect: {
-							destination: `/api/auth/signin?callbackUrl=${nextauth_url}`,
+							destination: `/api/auth/signin?callbackUrl=${getBaseUrl()}`,
 							permanent: false
 						}
 					}
@@ -78,7 +82,7 @@ class ClientMiddleware {
 					
 					return {
 						redirect: {
-							destination: this.failRedirects[role] || this.failRedirects?.default || `/api/auth/signin?callbackUrl=${nextauth_url}`,
+							destination: this.failRedirects[role] || this.failRedirects?.default || `/api/auth/signin?callbackUrl=${getBaseUrl()}`,
 							permanent: false
 						}
 					}
@@ -87,7 +91,7 @@ class ClientMiddleware {
 					
 					return {
 						redirect: {
-							destination: this.failRedirects?.default || `/api/auth/signin?callbackUrl=${nextauth_url}`,
+							destination: this.failRedirects?.default || `/api/auth/signin?callbackUrl=${getBaseUrl()}`,
 							permanent: false
 						}
 					}

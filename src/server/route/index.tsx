@@ -1,7 +1,7 @@
 import BaseController from "@controller/BaseController"
 import { NextApiRequest, NextApiResponse } from "next"
 import Illusion from "illusionjs"
-import * as AllMiddlewares from "@middleware/index"
+import * as AllMiddlewares from "@middleware"
 import Connection from "./Connection"
 
 type LowercaseKeys<R> = keyof { 
