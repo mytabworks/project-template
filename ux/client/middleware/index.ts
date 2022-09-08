@@ -2,6 +2,7 @@ import { Session } from "@middleware/Auth"
 import { getSession } from "next-auth/react"
 import Illusion from 'illusionjs'
 
+const nextauth_url = process.env.NEXT_PUBLIC_API_URL
 class ClientMiddleware {
 
 	protected authorizeRoleIDs: number[] = [];
@@ -22,21 +23,21 @@ class ClientMiddleware {
 		return this
 	}
 
-	public unauth(callback?: (context: any, session: Session) => ({props: any})) {
+	public unauth(callback?: (context: any, session: Session | null) => ({props: any})) {
 
 		return async (context: any) => {
 
-			const session = await getSession(context) as Session
+			const session = await getSession(context)
 			
 			if(session) {
 
 				if(this.failRedirects) {
 					
-					const role: any = session.roles.find((role: any) => this.failRedirects![role])
+					const role: any = session.user?.roles.find((role: any) => this.failRedirects![role])
 					
 					return {
 						redirect: {
-							destination: this.failRedirects[role] || this.failRedirects?.default || '/api/auth/signin',
+							destination: this.failRedirects[role] || this.failRedirects?.default || `/api/auth/signin?callbackUrl=${nextauth_url}`,
 							permanent: false
 						}
 					}
@@ -45,7 +46,7 @@ class ClientMiddleware {
 					
 					return {
 						redirect: {
-							destination: '/api/auth/signin',
+							destination: `/api/auth/signin?callbackUrl=${nextauth_url}`,
 							permanent: false
 						}
 					}
@@ -57,27 +58,27 @@ class ClientMiddleware {
 		} 
 	}
 
-	public auth(callback?: (context: any, session: Session) => ({props: any})) {
+	public auth(callback?: (context: any, session: Session | null) => ({props: any})) {
 
 		return async (context: any) => {
 
-			const session = await getSession(context) as Session
+			const session = await getSession(context)
 			
 			if(!session 
 				|| !(session 
 					&& Array.isArray(this.authorizeRoleIDs) 
 					&& this.authorizeRoleIDs.length > 0
-					&& session.roles.some((id) => this.authorizeRoleIDs.includes(id))
+					&& session.user?.roles.some((id) => this.authorizeRoleIDs.includes(id))
 				)
 			) {
 
 				if(session && this.failRedirects) {
 
-					const role: any = session.roles.find((role: any) => this.failRedirects![role])
+					const role: any = session.user?.roles.find((role: any) => this.failRedirects![role])
 					
 					return {
 						redirect: {
-							destination: this.failRedirects[role] || this.failRedirects?.default || '/api/auth/signin',
+							destination: this.failRedirects[role] || this.failRedirects?.default || `/api/auth/signin?callbackUrl=${nextauth_url}`,
 							permanent: false
 						}
 					}
@@ -86,7 +87,7 @@ class ClientMiddleware {
 					
 					return {
 						redirect: {
-							destination: this.failRedirects?.default || '/api/auth/signin',
+							destination: this.failRedirects?.default || `/api/auth/signin?callbackUrl=${nextauth_url}`,
 							permanent: false
 						}
 					}
