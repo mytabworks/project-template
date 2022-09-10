@@ -5,6 +5,8 @@ import User from './User'
 @ModelEntity(ActivityEntity, 'activity')
 class Activity extends Model {
 
+    protected use = "table"
+
     protected fillable = [
         'user_id',
         'description',

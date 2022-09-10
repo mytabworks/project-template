@@ -11,3 +11,7 @@ export const getServerSession = async (ctx: {
 }
 
 export type Session = (ReturnType<typeof getServerSession> extends Promise<infer R> ? R : any)
+
+export type NextApiRequestWithSession = NextApiRequest & {
+    session: Session
+}

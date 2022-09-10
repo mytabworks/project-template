@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, DeleteDateColumn} from "typeorm";
 
 @Entity("user_provider")
 export class UserProvider {
@@ -14,4 +14,13 @@ export class UserProvider {
 
     @Column('varchar')
     uid!: string;
+
+    @UpdateDateColumn()
+    updated_at!: Date;
+    
+    @CreateDateColumn()
+    created_at!: Date;
+
+    @DeleteDateColumn({nullable: true})
+    deleted_at?: Date
 }

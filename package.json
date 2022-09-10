@@ -1,14 +1,14 @@
 {
-  "name": "event-creatives",
+  "name": "project-template",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "migration:generate": "npx ts-node ./node_modules/.bin/typeorm migration:generate ./server/migration/$npm_config_file -d ./server/datasource/index.ts",
-    "migration:run": "npx ts-node ./node_modules/.bin/typeorm migration:run -d ./server/datasource/index.ts"
+    "dev": "npx ts-node ./node_modules/.bin/next dev",
+    "start": "npx ts-node ./node_modules/.bin/next start",
+    "build": "npx ts-node ./node_modules/.bin/next build",
+    "lint": "npx ts-node ./node_modules/.bin/next lint",
+    "migration:generate": "npx ts-node ./node_modules/.bin/typeorm migration:generate ./src/server/migration/$npm_config_file -d ./src/server/datasource/index.ts",
+    "migration:run": "npx ts-node ./node_modules/.bin/typeorm migration:run -d ./src/server/datasource/index.ts"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -16,7 +16,8 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.0",
     "classnames": "^2.3.1",
-    "eloquents": "^0.2.5",
+    "draggerjs": "^0.1.6",
+    "eloquents": "^0.2.8",
     "formydable": "^1.5.2",
     "next": "12.2.4",
     "next-auth": "^4.10.3",

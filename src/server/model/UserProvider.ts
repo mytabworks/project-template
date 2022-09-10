@@ -5,6 +5,8 @@ import User from './User'
 @ModelEntity(UserProviderEntity, 'user_provider')
 class UserProvider extends Model {
 
+    protected use = "table"
+
     protected fillable = [
         'type',
         'uid',

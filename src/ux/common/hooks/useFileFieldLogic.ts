@@ -82,7 +82,7 @@ export const useFileFieldLogic = ({
         // eslint-disable-next-line
     }, [previews])
 
-    const handleChange = useCallback((event) => {
+    const handleChange = useCallback((event: any) => {
         const files = Array.from(event.target.files) as any[]
         if(files.length > 0) {
             if(rules) {

@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn} from "typeorm";
 
 @Entity("user")
 export class User {
@@ -28,9 +28,12 @@ export class User {
     email_verified!: boolean;
 
     @UpdateDateColumn()
-    updated_at!: number;
+    updated_at!: Date;
     
     @CreateDateColumn()
-    created_at!: number;
+    created_at!: Date;
+    
+    @DeleteDateColumn({nullable: true})
+    deleted_at?: Date
 
 }

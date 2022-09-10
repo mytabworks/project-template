@@ -8,6 +8,8 @@ import UserProvider from './UserProvider'
 @ModelEntity(UserEntity, 'user')
 class User extends Model {
 
+    protected use = "table"
+
     protected fillable = [
         'email',
         'name',

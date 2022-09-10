@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, DeleteDateColumn} from "typeorm";
 
 @Entity("user_role")
 export class UserRole {
@@ -12,4 +12,12 @@ export class UserRole {
     @Column('integer')
     role_id!: number;
 
+    @UpdateDateColumn()
+    updated_at!: Date;
+    
+    @CreateDateColumn()
+    created_at!: Date;
+
+    @DeleteDateColumn({nullable: true})
+    deleted_at?: Date
 }

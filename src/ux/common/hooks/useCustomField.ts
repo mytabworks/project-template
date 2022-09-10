@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useContext, createContext } from 'react'
-import { useCustomFieldReseter } from '../../components/CustomFieldReseter';
+// import { useCustomFieldReseter } from '../../components/CustomFieldReseter';
 
 export type CustomFieldStates<V = any> = {
     value: V;
@@ -77,17 +77,17 @@ export const useCustomField = <V = any>({
         mounted.current = true
     }, [])
 
-    const customFieldReseter = useCustomFieldReseter()
+    // const customFieldReseter = useCustomFieldReseter()
 
-    useEffect(() => {
-        if(!!customFieldReseter) {
-            customFieldReseter.addCallbackReset(name, () => setStates(prev => ({...prev, dirty: false })))
+    // useEffect(() => {
+    //     if(!!customFieldReseter) {
+    //         customFieldReseter.addCallbackReset(name, () => setStates(prev => ({...prev, dirty: false })))
 
-            return () => {
-                customFieldReseter.removeCallbackReset(name)
-            }
-        }
-    }, [])
+    //         return () => {
+    //             customFieldReseter.removeCallbackReset(name)
+    //         }
+    //     }
+    // }, [])
 
     return selectStates
 }

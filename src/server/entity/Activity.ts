@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, DeleteDateColumn} from "typeorm";
 
 @Entity("activity")
 export class Activity {
@@ -12,10 +12,13 @@ export class Activity {
     @Column()
     description!: string;
 
-    @Column('bigint')
-    created_at!: number;
+    @UpdateDateColumn()
+    updated_at!: Date;
+    
+    @CreateDateColumn()
+    created_at!: Date;
 
-    @Column('bigint')
-    updated_at!: number;
+    @DeleteDateColumn({nullable: true})
+    deleted_at?: Date
 
 }

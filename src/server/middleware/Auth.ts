@@ -1,4 +1,4 @@
-import { getServerSession } from "@server-utils/session"
+import { getServerSession, NextApiRequestWithSession } from "@server-utils/session"
 import { NextApiRequest, NextApiResponse } from "next"
 import BaseMiddleware from "./BaseMiddleware"
 
@@ -7,6 +7,8 @@ export class Auth extends BaseMiddleware {
     public static async handle(request: NextApiRequest, response: NextApiResponse<any>, authorizeRoleIDs: number[] | null): Promise<boolean> {
 
         const session = await getServerSession({ req: request, res: response })
+
+        ;(request as NextApiRequestWithSession).session = session
 
         if(!session 
             || !(session 

@@ -1,6 +1,5 @@
-import { Session } from '@server-utils/session';
+import { getServerSession, Session } from '@server-utils/session';
 import Illusion from 'illusionjs'
-import { getSession } from 'next-auth/react';
 
 export const getBaseUrl = () => {
 	if (typeof window !== "undefined") return window.location.origin; // browser should use relative url
@@ -9,7 +8,7 @@ export const getBaseUrl = () => {
 };
 class ClientMiddleware {
 
-	protected authorizeRoleIDs: number[] = [];
+	protected authorizeRoleIDs: number[] | null = null;
 
 	protected failRedirects?: Record<any | 'default', string>;
 
@@ -31,7 +30,7 @@ class ClientMiddleware {
 
 		return async (context: any) => {
 
-			const session = await getSession(context)
+			const session = await getServerSession(context)
 			
 			if(session) {
 
@@ -66,14 +65,18 @@ class ClientMiddleware {
 
 		return async (context: any) => {
 
-			const session = await getSession(context)
+			const session = await getServerSession(context)
 			
 			if(!session 
 				|| !(session 
-					&& Array.isArray(this.authorizeRoleIDs) 
-					&& this.authorizeRoleIDs.length > 0
-					&& session.user?.roles.some((id) => this.authorizeRoleIDs.includes(id))
-				)
+					&& (
+						(Array.isArray(this.authorizeRoleIDs) 
+							&& this.authorizeRoleIDs.length > 0
+							&& session.user?.roles.some((id) => this.authorizeRoleIDs?.includes(id)
+						) 
+						|| this.authorizeRoleIDs === null
+					)
+				))
 			) {
 
 				if(session && this.failRedirects) {

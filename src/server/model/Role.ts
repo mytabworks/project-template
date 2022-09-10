@@ -4,6 +4,8 @@ import { Role as RoleEntity } from '@entity/Role'
 @ModelEntity(RoleEntity, 'role')
 class Role extends Model {
 
+    protected use = "table"
+
     protected deletable: boolean = false;
 
     protected timestamp: boolean = false;
