@@ -7,18 +7,22 @@ module.exports = {
 	"database": process.env.DB_DATABASE,
 	"synchronize": process.env.DB_SYNCHRONIZE,
 	"logging": process.env.DB_LOGGING,
+	"ssl": {
+		"rejectUnauthorized": process.env.NEXT_PUBLIC_ENV === "production"
+	},
+	"migrationsRun": false,
 	"entities": [
-		"server/entity/**/*.ts"
+		"src/server/entity/**/*.ts"
 	],
 	"migrations": [
-		"server/migration/**/*.ts"
+		"src/server/migration/**/*.ts"
 	],
 	"subscribers": [
-		"server/subscriber/**/*.ts"
+		"src/server/subscriber/**/*.ts"
 	],
 	"cli": {
-		"entitiesDir": "server/entity",
-		"migrationsDir": "server/migration",
-		"subscribersDir": "server/subscriber"
+		"entitiesDir": "src/server/entity",
+		"migrationsDir": "src/server/migration",
+		"subscribersDir": "src/server/subscriber"
 	}
 }
