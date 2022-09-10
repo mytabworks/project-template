@@ -1,11 +1,6 @@
 import { setDataSource } from "eloquents"
 import { DataSource } from "typeorm"
 import config from "eloquent.config"
-import * as Entities from "@entity/index"
-
-const options: any = config
-
-options.entities = Object.values(Entities)
 
 class Connection {
     
@@ -21,7 +16,7 @@ class Connection {
             
             this.initialize = true
 
-            const dataSource = new DataSource(options)
+            const dataSource = new DataSource(config as any)
     
             this.awaitInitialization = dataSource.initialize().then(() => {
 
