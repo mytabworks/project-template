@@ -1,5 +1,6 @@
-import { getServerSession, Session } from '@server-utils/session';
 import Illusion from 'illusionjs'
+import Connection from '@server/connection';
+import { getServerSession, Session } from '@server/session';
 
 export const getBaseUrl = () => {
 	if (typeof window !== "undefined") return window.location.origin; // browser should use relative url
@@ -29,6 +30,8 @@ class ClientMiddleware {
 	public unauth(callback?: (context: any, session: Session | null) => ({props: any})) {
 
 		return async (context: any) => {
+
+			await Connection.createIfNotExists()
 
 			const session = await getServerSession(context)
 			
@@ -64,6 +67,8 @@ class ClientMiddleware {
 	public auth(callback?: (context: any, session: Session | null) => ({props: any})) {
 
 		return async (context: any) => {
+
+			await Connection.createIfNotExists()
 
 			const session = await getServerSession(context)
 			

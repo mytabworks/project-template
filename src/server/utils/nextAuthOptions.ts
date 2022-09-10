@@ -1,10 +1,10 @@
 import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
-import User from "@model/User"
-import UserProvider from "@model/UserProvider"
 import { ConnectionPool } from "eloquents"
 import { compare } from "bcryptjs"
+import User from "../model/User"
+import UserProvider from "../model/UserProvider"
 
 const maxAge = 30 * 24 * 60 * 60 // 30 days
 

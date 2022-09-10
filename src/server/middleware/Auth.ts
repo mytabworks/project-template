@@ -1,6 +1,6 @@
-import { getServerSession, NextApiRequestWithSession } from "@server-utils/session"
 import { NextApiRequest, NextApiResponse } from "next"
 import BaseMiddleware from "./BaseMiddleware"
+import { getServerSession, NextApiRequestWithSession } from "../session"
 
 export class Auth extends BaseMiddleware {
 

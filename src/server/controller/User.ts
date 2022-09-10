@@ -1,10 +1,11 @@
-import User from "@model/User"
 import { ConnectionPool } from "eloquents"
 import { NextApiRequest, NextApiResponse } from "next"
-import Validozer from "validozer/esm"
-import BaseController from "./BaseController"
+import Validozer from "validozer"
 import { compare, hash } from 'bcryptjs'
 import { getSession } from "next-auth/react"
+import User from "../model/User"
+import { NextApiRequestWithSession } from "../session"
+import BaseController from "./BaseController"
 
 class UserController extends BaseController {
     
@@ -31,7 +32,7 @@ class UserController extends BaseController {
                 success: true,
                 data: user
             });
-        } catch (error) {
+        } catch (error: any) {
             
             return response.status(500).json({
                 success: false,
@@ -43,8 +44,8 @@ class UserController extends BaseController {
         }
     }
 
-    public static async show(request: NextApiRequest, response: NextApiResponse<any>) {
-
+    public static async show(request: NextApiRequestWithSession, response: NextApiResponse<any>) {
+        console.log(request.session)
         const { id } = request.query as Record<string, string>
         
         try {
@@ -62,7 +63,7 @@ class UserController extends BaseController {
                 data: user.toJSON(),
             })
 
-        } catch (error) {
+        } catch (error: any) {
             
             return response.status(500).json({
                 success: false,
@@ -121,7 +122,7 @@ class UserController extends BaseController {
                 id: user.id,
                 message: `User created successfully`
             })
-        } catch (error) {
+        } catch (error: any) {
             
             return response.status(500).json({
                 success: false,
@@ -190,7 +191,7 @@ class UserController extends BaseController {
                 id: user.id,
                 message: `User updated successfully`
             })
-        } catch (error) {
+        } catch (error: any) {
             
             return response.status(500).json({
                 success: false,
@@ -218,7 +219,7 @@ class UserController extends BaseController {
                 message: `User deleted successfully`
             })
 
-        } catch (error) {
+        } catch (error: any) {
             
             return response.status(500).json({
                 success: false,
@@ -298,7 +299,7 @@ class UserController extends BaseController {
                 id: user.id,
                 message: `User registered successfully`
             })
-        } catch (error) {
+        } catch (error: any) {
             return response.status(500).send({
                 success: false,
                 message: error.message
@@ -377,7 +378,7 @@ class UserController extends BaseController {
                 success: true,
                 message: 'User change password successfully'
             })
-        } catch(error) {
+        } catch(error: any) {
             return response.status(500).send({
                 success: false,
                 message: error.message

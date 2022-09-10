@@ -1,23 +1,9 @@
 {
-    "compilerOptions": {
-      "baseUrl": "./",
-      "paths": { 
-        "@components/*": ["./src/ux/components/*"],
-        "@client/*": ["./src/ux/client/*"],
-        "@styles/*": ["./src/ux/assets/styles/*"],
-        "@images/*": ["./src/ux/assets/images/*"],
-        "@utils/*": ["./src/ux/common/utils/*"],
-        "@hooks/*": ["./src/ux/common/hooks/*"],
-        "@config/*": ["./src/ux/config/*"],
-        "@entity/*": ["./src/server/entity/*"],
-        "@migration/*": ["./src/server/migration/*"],
-        "@model/*": ["./src/server/model/*"],
-        "@controller/*": ["./src/server/controller/*"],
-        "@middleware/*": ["./src/server/middleware/*"],
-        "@middleware": ["./src/server/middleware"],
-        "@route/*": ["./src/server/route/*"],
-        "@route": ["./src/server/route"],
-        "@server-utils/*": ["./src/server/utils/*"]
-      }
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": { 
+      "@server/*": ["./src/server/*"],
+      "@client/*": ["./src/client/*"]
     }
+  }
 }

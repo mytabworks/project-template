@@ -1,8 +1,8 @@
-import BaseController from "@controller/BaseController"
 import { NextApiRequest, NextApiResponse } from "next"
 import Illusion from "illusionjs"
-import * as AllMiddlewares from "@middleware"
-import Connection from "./Connection"
+import BaseController from "./controller/BaseController"
+import * as AllMiddlewares from "./middleware"
+import Connection from "./connection"
 
 type LowercaseKeys<R> = keyof { 
     [P in keyof R as `${Lowercase<P & string>}`]?: R;

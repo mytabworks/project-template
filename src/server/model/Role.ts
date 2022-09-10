@@ -1,5 +1,5 @@
 import { Model, ModelWrapper, ModelEntity } from 'eloquents'
-import { Role as RoleEntity } from '@entity/Role'
+import { Role as RoleEntity } from '../entity/Role'
 
 @ModelEntity(RoleEntity, 'role')
 class Role extends Model {

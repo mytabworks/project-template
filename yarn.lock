@@ -1150,15 +1150,20 @@ dotenv@^16.0.0, dotenv@^16.0.2:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.2.tgz#0b0f8652c016a3858ef795024508cddc4bffc5bf"
   integrity sha512-JvpYKUmzQhYoIFgK2MOnF3bciIZoItIIoryihy0rIA+H4Jy0FmgyKYAHCTN98P5ybGSJcIFbh6QKeJdtZd1qhA==
 
+draggerjs@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/draggerjs/-/draggerjs-0.1.6.tgz#5f6c096d7bf18d8151b0a722e2631a5f2e9f9bd6"
+  integrity sha512-Pjk1vH+pUs0N+YxjwQBkUcFVH7cEc7tJ2Ctu7gTObZ30kyL7p5kGLACm/Lhuf2+1iJxLq1YYhmoM/qgwQ0brKA==
+
 electron-to-chromium@^1.4.202:
   version "1.4.241"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.241.tgz#5aa03ab94db590d8269f4518157c24b1efad34d6"
   integrity sha512-e7Wsh4ilaioBZ5bMm6+F4V5c11dh56/5Jwz7Hl5Tu1J7cnB+Pqx5qIF2iC7HPpfyQMqGSvvLP5bBAIDd2gAtGw==
 
-eloquents@^0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/eloquents/-/eloquents-0.2.5.tgz#979fa79b3125cd862a10ea783baa7022fc7e2889"
-  integrity sha512-SI69JdrU2K9b8ZgI3EmpfeK9B92JSOvGUoEsrXZ9A110IzzfAlpREWsqFx/Oo3A8GWPiIqNSANKB4vhT6Z+/3Q==
+eloquents@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/eloquents/-/eloquents-0.2.8.tgz#ff1b72917d2fe37ac6deec3a54953ee4c61a565b"
+  integrity sha512-WWQ+/uHlCN6fNXQO4unOy7GsMrzoo4i5dpGHXzUUpLd7UQADKOMLAAJLrwTl7Gk55FMkTazB4jLZrF5O2D4llg==
   dependencies:
     app-root-path "^3.1.0"
     illusionjs "^1.0.1"

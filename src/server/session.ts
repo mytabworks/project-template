@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { unstable_getServerSession } from "next-auth"
-import nextAuthOptions from "./nextAuthOptions"
+import nextAuthOptions from "./utils/nextAuthOptions"
 
 export const getServerSession = async (ctx: {
     req: NextApiRequest;

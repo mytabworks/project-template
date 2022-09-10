@@ -17,22 +17,8 @@
     ["module-resolver", {
       "root": ["./"],
       "alias": {
-        "@components": "./src/ux/components",
-        "@client": "./src/ux/client",
-        "@utils": "./src/ux/common/utils",
-        "@hooks": "./src/ux/common/hooks",
-        "@styles": "./src/ux/assets/styles",
-        "@images": "./src/ux/assets/images",
-        "@config/*": "./src/ux/config/*",
-        "@entity/*": "./src/server/entity/*",
-        "@migration/*": "./src/server/migration/*",
-        "@model/*": "./src/server/model/*",
-        "@controller/*": "./src/server/controller/*",
-        "@middleware/*": "./src/server/middleware/*",
-        "@middleware": "./src/server/middleware",
-        "@route/*": "./src/server/route/*",
-        "@route": "./src/server/route",
-        "@server-utils/*": "./src/server/utils/*"
+        "@server": "./src/server",
+        "@client": "./src/client"
       }
     }]
   ]

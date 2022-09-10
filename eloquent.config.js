@@ -7,9 +7,9 @@ module.exports = {
 	"database": process.env.DB_DATABASE,
 	"synchronize": process.env.DB_SYNCHRONIZE,
 	"logging": process.env.DB_LOGGING,
-	"ssl": {
+	"ssl": process.env.DB_HOST !== "localhost" ? {
 		"rejectUnauthorized": process.env.NEXT_PUBLIC_ENV === "production"
-	},
+	} : undefined,
 	"migrationsRun": false,
 	"entities": [
 		"src/server/entity/**/*.ts"

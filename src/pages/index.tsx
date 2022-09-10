@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '@styles/Home.module.css'
+import styles from '@client/assets/styles/Home.module.css'
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from 'next/router'
 import { Button, Container, Spinner } from 'react-bootstrap'
 import ClientMiddleware from '@client/middleware'
-import { useAPI } from '@hooks/useAPI'
+import { useAPI } from '@client/common/hooks/useAPI'
 
 const Home: NextPage = (props) => {
 	const router = useRouter()

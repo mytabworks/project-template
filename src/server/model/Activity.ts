@@ -1,5 +1,5 @@
 import { Model, ModelWrapper, ModelEntity } from 'eloquents'
-import { Activity as ActivityEntity } from '@entity/Activity'
+import { Activity as ActivityEntity } from '../entity/Activity'
 import User from './User'
 
 @ModelEntity(ActivityEntity, 'activity')

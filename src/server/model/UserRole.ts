@@ -1,5 +1,5 @@
 import { Model, ModelWrapper, ModelEntity } from 'eloquents'
-import { UserRole as UserRoleEntity } from '@entity/UserRole'
+import { UserRole as UserRoleEntity } from '../entity/UserRole'
 
 @ModelEntity(UserRoleEntity, 'user_role')
 class UserRole extends Model {
