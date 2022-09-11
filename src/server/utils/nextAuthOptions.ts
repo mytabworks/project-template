@@ -48,24 +48,38 @@ const nextAuthOptions: NextAuthOptions = {
 
             if(token.sub) {
                 
-                const dbUser = await User.find(token.sub, ['*'], {
-                    roles: ($query) => {
-                        $query.select('id')
-                    }
-                })
+                const cp = new ConnectionPool()
+                
+                try {
+                    await cp.open()
 
-                session = {
-                    ...session,
-                    user: {
-                        id: dbUser.id,
-                        profile_img: dbUser.profile_img,
-                        name: dbUser.name,
-                        email: dbUser.email,
-                        email_verified: dbUser.email_verified,
-                        roles: dbUser.$roles?.map((role) => role.id),
-                    } as any,
-                    accessToken: token.accessToken  
+                    const dbUser = await User.find(token.sub, ['*'], {
+                        roles: ($query) => {
+                            $query.select('id')
+                        }
+                    }, cp)
+
+                    session = {
+                        ...session,
+                        user: {
+                            id: dbUser.id,
+                            profile_img: dbUser.profile_img,
+                            name: dbUser.name,
+                            email: dbUser.email,
+                            email_verified: dbUser.email_verified,
+                            roles: dbUser.$roles?.map((role) => role.id),
+                        } as any,
+                        accessToken: token.accessToken  
+                    }
+
+                } catch (error: any) {
+
+                    console.error(error)
+                } finally {
+
+                    await cp.close()
                 }
+
             }
 
             return session
@@ -134,15 +148,16 @@ const nextAuthOptions: NextAuthOptions = {
 
             async profile(profile): Promise<any> {
 
-                const connectionPool = new ConnectionPool()
+                const cp = new ConnectionPool()
 
                 try {
-                    await connectionPool.open()
+                    await cp.open()
 
                     const provider = await UserProvider
                         .where('uid', profile.sub)
                         .where('type', 'google')
                         .with('user')
+                        .pool(cp)
                         .first()
 
                     if(provider.hasItem === false) {
@@ -150,19 +165,20 @@ const nextAuthOptions: NextAuthOptions = {
                         const user = await User
                             .select('id')
                             .where('email', profile.email)
+                            .pool(cp)
                             .first()
 
                         if(user.hasItem === true) {
                             
-                            const newProvider = user.providers().create()
+                            const newProvider = user.providers().pool(cp).create()
                             newProvider.type = 'google'
                             newProvider.uid = profile.sub
-                            await newProvider.save()
+                            await newProvider.save(cp)
 
                             if(user.email_verified === false) {
 
                                 user.email_verified = true
-                                await user.save()
+                                await user.save(cp)
                                 
                             }
 
@@ -179,16 +195,16 @@ const nextAuthOptions: NextAuthOptions = {
                             newUser.email = profile.email
                             newUser.profile_img = profile.picture
                             newUser.email_verified = true
-                            await newUser.save()
+                            await newUser.save(cp)
 
                             // role 3 is consumer
-                            const newRole = await newUser.roles().findOrNew(3)
-                            await newRole.save()
+                            const newRole = await newUser.roles().pool(cp).findOrNew(6)
+                            await newRole.save(cp)
 
-                            const newProvider = newUser.providers().create()
+                            const newProvider = newUser.providers().pool(cp).create()
                             newProvider.type = 'google'
                             newProvider.uid = profile.sub
-                            await newProvider.save()
+                            await newProvider.save(cp)
 
                             return {
                                 id: newUser.id,
@@ -215,7 +231,7 @@ const nextAuthOptions: NextAuthOptions = {
                     console.error(error)
                 } finally {
 
-                    await connectionPool.close()
+                    await cp.close()
                 }
                 
             },
