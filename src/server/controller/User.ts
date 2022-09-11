@@ -6,7 +6,7 @@ import { getSession } from "next-auth/react"
 import User from "../model/User"
 import { NextApiRequestWithSession } from "../session"
 import BaseController from "./BaseController"
-
+import nodemailer from "nodemailer"
 class UserController extends BaseController {
     
     public static async index(_request: NextApiRequest, response: NextApiResponse<any>) {
@@ -57,6 +57,22 @@ class UserController extends BaseController {
                     message: `User Not Found`
                 })
             }
+
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: "myproxyemailserver@gmail.com",
+                    pass: "xxxxxxx"
+                }
+            })
+
+            await transporter.sendMail({
+                from: '"Fred Foo 👻" <foo@example.com>', // sender address
+                to: user.email, // list of receivers
+                subject: "Hello ✔", // Subject line
+                text: "Hello world?", // plain text body
+                html: "<b>Hello world?</b>", // html body
+            });
 
             response.status(200).json({
                 success: true,
