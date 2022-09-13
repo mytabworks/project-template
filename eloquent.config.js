@@ -5,12 +5,12 @@ module.exports = {
 	"username": process.env.DB_USER,
 	"password": process.env.DB_PASS,
 	"database": process.env.DB_DATABASE,
-	"synchronize": process.env.DB_SYNCHRONIZE,
-	"logging": process.env.DB_LOGGING,
+	"synchronize": process.env.DB_SYNCHRONIZE === 'true',
+	"logging": process.env.DB_LOGGING === 'true',
 	"ssl": process.env.DB_HOST !== "localhost" ? {
 		"rejectUnauthorized": process.env.NEXT_PUBLIC_ENV === "production"
 	} : undefined,
-	"migrationsRun": process.env.DB_MIGRATION_RUN,
+	"migrationsRun": process.env.DB_MIGRATION_RUN === 'true',
 	"entities": [
 		"src/server/entity/**/*.ts"
 	],
