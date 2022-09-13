@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import React from 'react'
 import ClientMiddleware from '@client/middleware'
+import { RoleType } from '@server/model/Role'
 
 interface HelloProps {
     
@@ -20,6 +21,6 @@ const Hello: React.FunctionComponent<HelloProps> = (props) => {
     )
 }
 
-export const getServerSideProps = ClientMiddleware.redirects({ [3]: '/customer' }).unauth()
+export const getServerSideProps = ClientMiddleware.redirects({ [RoleType.CLIENT]: '/customer' }).unauth()
 
 export default Hello

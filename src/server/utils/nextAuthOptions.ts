@@ -5,6 +5,7 @@ import { ConnectionPool } from "eloquents"
 import { compare } from "bcryptjs"
 import User from "../model/User"
 import UserProvider from "../model/UserProvider"
+import { RoleType } from "@server/model/Role"
 
 const maxAge = 30 * 24 * 60 * 60 // 30 days
 
@@ -197,8 +198,7 @@ const nextAuthOptions: NextAuthOptions = {
                             newUser.email_verified = true
                             await newUser.save(cp)
 
-                            // role 3 is consumer
-                            const newRole = await newUser.roles().pool(cp).findOrNew(6)
+                            const newRole = await newUser.roles().pool(cp).findOrNew(RoleType.CLIENT)
                             await newRole.save(cp)
 
                             const newProvider = newUser.providers().pool(cp).create()
