@@ -22,8 +22,8 @@ export class UserWebPushSubscription {
     key_p256dh!: string;
 
     @UpdateDateColumn()
-    updated_at!: Date;
+    updated_at!: string;
 
     @CreateDateColumn()
-    created_at!: Date;
+    created_at!: string;
 }

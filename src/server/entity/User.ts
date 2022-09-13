@@ -37,18 +37,18 @@ export class User {
     })
     interacting!: boolean;
 
-    @Column('time without time zone', {
+    @Column('timestamp without time zone', {
         nullable: true
     })
-    last_interaction!: Date;
+    last_interaction!: string;
 
     @UpdateDateColumn()
-    updated_at!: Date;
+    updated_at!: string;
     
     @CreateDateColumn()
-    created_at!: Date;
+    created_at!: string;
     
     @DeleteDateColumn({nullable: true})
-    deleted_at?: Date
+    deleted_at?: string;
 
 }

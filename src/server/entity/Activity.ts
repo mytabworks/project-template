@@ -13,12 +13,12 @@ export class Activity {
     description!: string;
 
     @UpdateDateColumn()
-    updated_at!: Date;
+    updated_at!: string;
     
     @CreateDateColumn()
-    created_at!: Date;
+    created_at!: string;
 
     @DeleteDateColumn({nullable: true})
-    deleted_at?: Date
+    deleted_at?: string;
 
 }
