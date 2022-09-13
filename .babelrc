@@ -4,7 +4,7 @@
       "next/babel",
       {
         "class-properties": {
-          "loose": true
+          "loose": false
         }
       }
     ]
@@ -12,8 +12,8 @@
   "plugins": [
     "babel-plugin-transform-typescript-metadata",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
-    ["@babel/plugin-proposal-private-methods", { "loose": true }],
+    ["@babel/plugin-proposal-private-property-in-object", { "loose": false }],
+    ["@babel/plugin-proposal-private-methods", { "loose": false }],
     ["module-resolver", {
       "root": ["./"],
       "alias": {

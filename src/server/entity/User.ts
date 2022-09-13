@@ -27,6 +27,21 @@ export class User {
     })
     email_verified!: boolean;
 
+    @Column('boolean', {
+        default: true
+    })
+    active!: boolean;
+
+    @Column('boolean', {
+        default: false
+    })
+    interacting!: boolean;
+
+    @Column('time without time zone', {
+        nullable: true
+    })
+    last_interaction!: Date;
+
     @UpdateDateColumn()
     updated_at!: Date;
     

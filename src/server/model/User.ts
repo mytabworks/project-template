@@ -4,6 +4,7 @@ import Activity from './Activity'
 import Role from './Role'
 import UserRole from './UserRole'
 import UserProvider from './UserProvider'
+import UserWebPushSubscription from './UserWebPushSubscription'
 
 @ModelEntity(UserEntity, 'user')
 class User extends Model {
@@ -31,6 +32,10 @@ class User extends Model {
 
     public activities() {
         return this.hasMany(Activity)
+    }
+
+    public webPushSubscriptions() {
+        return this.hasMany(UserWebPushSubscription)
     }
 
     public roles() {
