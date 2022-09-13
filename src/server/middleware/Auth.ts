@@ -12,6 +12,7 @@ export class Auth extends BaseMiddleware {
 
         if(!session 
             || !(session 
+                && session.user
                 && (
                     (Array.isArray(authorizeRoleIDs) 
                         && authorizeRoleIDs.length > 0

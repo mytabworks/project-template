@@ -74,6 +74,7 @@ class ClientMiddleware {
 			
 			if(!session 
 				|| !(session 
+					&& session.user
 					&& (
 						(Array.isArray(this.authorizeRoleIDs) 
 							&& this.authorizeRoleIDs.length > 0
