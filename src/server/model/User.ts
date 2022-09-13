@@ -24,6 +24,9 @@ class User extends Model {
         'password',
         'profile_img',
         'email_verified',
+        'active',
+        'interacting',
+        'last_interaction'
     ]
 
     protected guarded = [

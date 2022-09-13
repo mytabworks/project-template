@@ -2,7 +2,6 @@ import { ConnectionPool } from "eloquents"
 import { NextApiRequest, NextApiResponse } from "next"
 import Validozer from "validozer"
 import { compare, hash } from 'bcryptjs'
-import { getSession } from "next-auth/react"
 import User from "../model/User"
 import { NextApiRequestWithSession } from "../session"
 import BaseController from "./BaseController"
@@ -276,7 +275,7 @@ class UserController extends BaseController {
         if(validator.fails()) {
             const errors = validator.errorsJSON()
 
-            return response.status(200).send({
+            return response.status(200).json({
                 success: false,
                 errors
             })
@@ -291,7 +290,7 @@ class UserController extends BaseController {
             const exist = await User.where('email', data.email).first()
 
             if(exist.hasItem) {
-                return response.status(200).send({
+                return response.status(200).json({
                     success: false,
                     errors:[{
                         field: 'email',
@@ -310,13 +309,13 @@ class UserController extends BaseController {
             const newRole = await user.roles().findOrNew(3)
             await newRole.save()
 
-            return response.status(201).send({
+            return response.status(201).json({
                 success: true,
                 id: user.id,
                 message: `User registered successfully`
             })
         } catch (error: any) {
-            return response.status(500).send({
+            return response.status(500).json({
                 success: false,
                 message: error.message
             })
@@ -326,7 +325,8 @@ class UserController extends BaseController {
         }
     }
 
-    public static async changePassword(request: NextApiRequest, response: NextApiResponse<any>) {
+    public static async changePassword(request: NextApiRequestWithSession, response: NextApiResponse<any>) {
+        const session = request.session
         const data = request.body
         const rules = {
             current: {
@@ -348,7 +348,7 @@ class UserController extends BaseController {
         if(validator.fails()) {
             const errors = validator.errorsJSON()
 
-            return response.status(200).send({
+            return response.status(200).json({
                 success: false,
                 errors
             })
@@ -359,13 +359,11 @@ class UserController extends BaseController {
         try {
             await connectionPool.open()
 
-            const session = await getSession({ req: request })
-
             const user = await User.find(session?.user.id!)
 
             if(!user.hasItem) {
 
-                return response.status(200).send({
+                return response.status(200).json({
                     success: false,
                     message: "User don't exist"
                 })
@@ -376,7 +374,7 @@ class UserController extends BaseController {
 
             if(!valid) {
 
-                return response.status(200).send({
+                return response.status(200).json({
                     success: false,
                     errors: [{
                         field: 'current',
@@ -390,18 +388,45 @@ class UserController extends BaseController {
 
             await user.save()
 
-            return response.status(200).send({
+            return response.status(200).json({
                 success: true,
                 message: 'User change password successfully'
             })
         } catch(error: any) {
-            return response.status(500).send({
+            return response.status(500).json({
                 success: false,
                 message: error.message
             });
         } finally {
 
             await connectionPool.close()
+        }
+    }
+
+    public static async interaction(request: NextApiRequestWithSession, response: NextApiResponse<any>) {
+        const session = request.session
+        const { interacting } = request.body
+
+        try {
+            const user = await User.find(session?.user.id!, ["id", "last_interaction", "interacting"])
+
+            user.interacting = interacting
+
+            if(interacting === false) {
+
+                user.last_interaction = new Date().toISOString()
+            }
+
+            await user.save()
+
+            return response.status(203).json({
+                success: true
+            })
+        } catch(error: any) {
+            return response.status(500).json({
+                success: false,
+                message: error.message
+            });
         }
     }
 
