@@ -3,16 +3,10 @@ import BaseController from "./BaseController";
 import nodemailer from "nodemailer"
 import webpush from "web-push"
 import { NextApiRequestWithSession } from "@server/session";
-import UserSubscription from "@server/model/UserWebPushSubscription";
 import User from "@server/model/User";
 import { ConnectionPool } from "eloquents";
 import UserWebPushSubscription from "@server/model/UserWebPushSubscription";
-
-webpush.setVapidDetails(
-    'mailto:myproxyemailserver@gmail.com',
-    process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY!,
-    process.env.WEB_PUSH_PRIVATE_KEY!
-);
+import notifyUsers from "@server/utils/notifyUsers";
 
 class FeaturesController extends BaseController {
 
@@ -38,24 +32,14 @@ class FeaturesController extends BaseController {
             const body = request.body
             const session = request.session
 
-            const user = await User.find(session?.user.id!, ["id"], "webPushSubscriptions")
-
-            await Promise.all(user.$webPushSubscriptions?.map((webPushSubscription) => {
-                webpush.sendNotification({
-                    endpoint: webPushSubscription.endpoint!,
-                    keys: {
-                        auth: webPushSubscription.key_auth!,
-                        p256dh: webPushSubscription.key_p256dh!
-                    }
-                }, JSON.stringify({
-                    "title": "Bug TEST Sample", 
-                    "options": {
-                        "icon": "http://localhost:3000/vercel.svg",
-                        "silent": false ,
-                        "body": "This web app is being served cache-first by a service worker. To learn more, visit"
-                    }
-                }));
-            }) || [])
+            await notifyUsers([1, 2, 3, 4, 5, 6], {
+                "title": `${session?.user.name} Message`, 
+                "options": {
+                    "icon": "http://localhost:3000/vercel.svg",
+                    "silent": false ,
+                    "body": "This web app is being served cache-first by a service worker. To learn more, visit"
+                }
+            })
 
             response.status(200).json({
                 success: true,
