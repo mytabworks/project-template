@@ -1,5 +1,5 @@
 import User from "@server/model/User";
-import { ConnectionPool } from "eloquents";
+import { ConnectionPool } from "eloquent.orm.js";
 import webpush from "web-push"
 
 webpush.setVapidDetails(
@@ -8,12 +8,10 @@ webpush.setVapidDetails(
     process.env.WEB_PUSH_PRIVATE_KEY!
 );
 
-export default async (userIDs: number[], notification: { title: string; options: NotificationOptions}) => {
-    const cp = new ConnectionPool()
+export default async (userIDs: number[], notification: { title: string; options: NotificationOptions}, cp: ConnectionPool) => {
+
     try {
 
-        await cp.open()
-        
         const users = await User
             .select('id', 'interacting')
             .whereIn('id', userIDs)
@@ -38,8 +36,5 @@ export default async (userIDs: number[], notification: { title: string; options:
     } catch(error: any) {
 
         throw new Error(error)
-    } finally {
-
-        await cp.close()
     }
 }

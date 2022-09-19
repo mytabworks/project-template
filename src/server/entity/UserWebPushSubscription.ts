@@ -1,7 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn} from "typeorm";
 
 @Entity("user_wp_subscription")
-export class UserWebPushSubscription {
+export class UserWebPushSubscriptionEntity {
 
     @PrimaryGeneratedColumn()
     id!: number;

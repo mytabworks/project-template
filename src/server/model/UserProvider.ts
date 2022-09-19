@@ -1,5 +1,5 @@
-import { Model, ModelWrapper, ModelEntity } from 'eloquents'
-import { UserProvider as UserProviderEntity } from '../entity/UserProvider'
+import { Model, ModelWrapper, ModelEntity } from 'eloquent.orm.js'
+import { UserProviderEntity } from '../entity/UserProvider'
 import User from './User'
 
 @ModelEntity(UserProviderEntity, 'user_provider')

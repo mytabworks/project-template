@@ -1,5 +1,5 @@
-import { Model, ModelWrapper, ModelEntity } from 'eloquents'
-import { Role as RoleEntity } from '../entity/Role'
+import { Model, ModelWrapper, ModelEntity } from 'eloquent.orm.js'
+import { RoleEntity } from '../entity/Role'
 
 export enum RoleType {
     ADMIN = 1,

@@ -1,4 +1,4 @@
-import { setDataSource } from "eloquents"
+import { setDataSource } from "eloquent.orm.js"
 import { DataSource } from "typeorm"
 import config from "eloquent.config"
 

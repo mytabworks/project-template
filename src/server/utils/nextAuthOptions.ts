@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
-import { ConnectionPool } from "eloquents"
+import { ConnectionPool } from "eloquent.orm.js"
 import { compare } from "bcryptjs"
 import User from "../model/User"
 import UserProvider from "../model/UserProvider"
