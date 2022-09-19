@@ -1,4 +1,4 @@
-import { ConnectionPool } from "eloquents"
+import { ConnectionPool } from "eloquent.orm.js"
 import { NextApiRequest, NextApiResponse } from "next"
 import Validozer from "validozer"
 import { compare, hash } from 'bcryptjs'
@@ -8,28 +8,30 @@ import BaseController from "./BaseController"
 import nodemailer from "nodemailer"
 class UserController extends BaseController {
     
-    public static async index(_request: NextApiRequest, response: NextApiResponse<any>) {
-
+    public static async index(request: NextApiRequestWithSession, response: NextApiResponse<any>) {
+        const { search } = request.query
         const connectionPool = new ConnectionPool()
 
         try {
             await connectionPool.open()
             
             const user = await User
-                .with({
-                    activities: (query) => {
-                        query.cache(60000)
-                    },
-                    roles: (query) => {
-                        query.cache(60000)
-                    }
-                })
+                .where('name', 'LIKE', `%${search || ''}%`)
+                .where('id', '!=', request.session?.user.id || 0)
+                // .with({
+                //     activities: (query) => {
+                //         query.cache(60000)
+                //     },
+                //     roles: (query) => {
+                //         query.cache(60000)
+                //     }
+                // })
                 .cache(60000)
                 .get()
                 
             return response.status(200).json({
                 success: true,
-                data: user
+                items: user
             });
         } catch (error: any) {
             
@@ -75,7 +77,7 @@ class UserController extends BaseController {
 
             response.status(200).json({
                 success: true,
-                data: user.toJSON(),
+                item: user.toJSON(),
             })
 
         } catch (error: any) {

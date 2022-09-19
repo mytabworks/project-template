@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { unstable_getServerSession } from "next-auth"
+import { Server } from "socket.io"
+import { DefaultEventsMap } from "socket.io/dist/typed-events"
 import nextAuthOptions from "./utils/nextAuthOptions"
 
 export const getServerSession = async (ctx: {
@@ -13,5 +15,10 @@ export const getServerSession = async (ctx: {
 export type Session = (ReturnType<typeof getServerSession> extends Promise<infer R> ? R : any)
 
 export type NextApiRequestWithSession = NextApiRequest & {
-    session: Session
+    session: Session;
+    socket: NextApiRequest["socket"] & {
+        server: DefaultEventsMap & {
+            io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
+        }
+    }
 }

@@ -1,7 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn} from "typeorm";
 
 @Entity("user")
-export class User {
+export class UserEntity {
 
     @PrimaryGeneratedColumn()
     id!: number;
@@ -41,6 +41,9 @@ export class User {
         nullable: true
     })
     last_interaction!: string;
+
+    @Column({type: 'varchar', length: 230, nullable: true})
+    socket_id!: string;
 
     @UpdateDateColumn()
     updated_at!: string;

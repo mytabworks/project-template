@@ -1,10 +1,12 @@
-import { Model, ModelWrapper, ModelEntity } from 'eloquents'
-import { User as UserEntity } from '../entity/User'
+import { Model, ModelWrapper, ModelEntity, ConnectionPool } from 'eloquent.orm.js'
+import { UserEntity } from '../entity/User'
 import Activity from './Activity'
 import Role from './Role'
 import UserRole from './UserRole'
 import UserProvider from './UserProvider'
 import UserWebPushSubscription from './UserWebPushSubscription'
+import Chat from './Chat'
+import UserChat from './UserChat'
 
 @ModelEntity(UserEntity, 'user')
 class User extends Model {
@@ -26,7 +28,8 @@ class User extends Model {
         'email_verified',
         'active',
         'interacting',
-        'last_interaction'
+        'last_interaction',
+        'socket_id'
     ]
 
     protected guarded = [
@@ -47,6 +50,30 @@ class User extends Model {
 
     public providers() {
         return this.hasMany(UserProvider)
+    }
+
+    public chats() {
+        return this.belongsToMany(Chat, UserChat)
+    }
+
+    public async getChat(user_id: string | number, cp?: ConnectionPool): ReturnType<typeof Chat["first"]> {
+
+        const query = this.chats().leftJoin('user_chat', 'user_chat.chat_id', 'chat.id')
+            .select('(COUNT(user_id) > 0) as friend', 'chat.id as id', 'title', 'grouped', 'chat.updated_at as updated_at', 'chat.created_at as created_at')
+            .where('user_chat.user_id', '=', user_id)
+            .where('chat.grouped', false)
+            .groupBy('chat.id')
+            .with({
+                users: (query) => {
+                    query.where('id', '!=', this.getPrimaryKeyId())
+                }
+            })
+
+        if(cp) {
+            query.pool(cp)
+        }
+
+        return query.first()
     }
 }
 

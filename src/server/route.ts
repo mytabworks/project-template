@@ -3,6 +3,7 @@ import Illusion from "illusionjs"
 import BaseController from "./controller/BaseController"
 import * as AllMiddlewares from "./middleware"
 import Connection from "./connection"
+import Socket from "./socket"
 
 type LowercaseKeys<R> = keyof { 
     [P in keyof R as `${Lowercase<P & string>}`]?: R;
@@ -80,6 +81,8 @@ class Route {
 
             // elequent or typeorm initialize database if not yet initiallize
             await Connection.createIfNotExists()
+
+            Socket.createIfNotExists(request, response)
 
             // if there is a middleware that return false, this will prevent to proceed any further
             if((await this.invokeMiddlewares(request, response)).some(proceed => proceed === false)) {
@@ -203,6 +206,8 @@ class Route {
                 // elequent or typeorm initialize database if not yet initiallize
                 await Connection.createIfNotExists()
 
+                Socket.createIfNotExists(request, response)
+
                 // if there is a middleware that return false, this will prevent to proceed any further
                 if((await this.invokeMiddlewares(request, response)).some(proceed => proceed === false)) {
                     
@@ -229,6 +234,8 @@ class Route {
         return async (request: NextApiRequest, response: NextApiResponse<any>) => {
 
             await Connection.createIfNotExists()
+
+            Socket.createIfNotExists(request, response)
 
             await route(request, response)
 
