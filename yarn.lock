@@ -4008,6 +4008,11 @@ randombytes@^2.1.0:
   dependencies:
     safe-buffer "^5.1.0"
 
+react-bootstrap-toast@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-toast/-/react-bootstrap-toast-0.1.1.tgz#1352f0808642846c85f17eb453c5adb8fe8feae7"
+  integrity sha512-CnwRS9ffl1Om8wffLQDAY4VB/ClX82+dwzQSp6OXwP167BrflUByfiBxOccd14YktEyB9n9Sfo3uvSvCg50VTg==
+
 react-bootstrap@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-2.5.0.tgz#e25e649e37f080d38eeb92ad5b4ed562a1d7de62"
