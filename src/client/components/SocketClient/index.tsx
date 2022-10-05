@@ -1,16 +1,24 @@
-import type { SocketEvent, SocketEventChatMessage } from '@server/socket'
+import type { SocketEvent } from '@server/socket'
 import { useAPI } from '@client/common/hooks/useAPI'
 import { useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
-import { io } from 'socket.io-client'
+import { io, ManagerOptions, SocketOptions } from 'socket.io-client'
 import worldTrigger from 'world-trigger'
-import retoast from 'retoast'
 import chatmessages from './chatmessage'
+import chattyping from './chattyping'
 
 const getBaseUrl = () => {
     if (typeof window !== "undefined") return window.location.origin; // browser should use relative url
     if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
     return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
+}
+
+const options: Partial<ManagerOptions & SocketOptions> =  {
+    path: '/socket'
+}
+
+if(process.env.NEXT_PUBLIC_ENV === "production") {
+    options.transports = ["websocket", "polling"]
 }
 
 interface SocketClientProps {
@@ -25,7 +33,7 @@ const SocketClient: React.FunctionComponent<SocketClientProps> = ({children}) =>
     useEffect(() => {
         if(status === "authenticated" && data.user.id) {
 
-            const socket = io(getBaseUrl(), { path: '/socket' })
+            const socket = io(getBaseUrl(), options)
             
             socket.on("connect", () => {
                 console.log("SOCKET CONNECTED!", socket.id);
@@ -35,14 +43,13 @@ const SocketClient: React.FunctionComponent<SocketClientProps> = ({children}) =>
                     }
                 })
             })
-
-            socket.on("error", (event) => {
-                alert(JSON.stringify(event))
-            })
     
             socket.on("socket.client", (event: SocketEvent) => {
                 
                 switch (event.type) {
+                    case "chat.typing":
+                        chattyping(event.data as any)
+                        break;
                     case "chat.message":
                         chatmessages(event.data as any)
                         break;

@@ -1,6 +1,6 @@
 import React from 'react'
 import worldTrigger from 'world-trigger'
-import retoast from 'retoast'
+import toast from 'react-bootstrap-toast'
 
 type SocketEventChatMessage = {
     sender: {
@@ -25,14 +25,16 @@ type SocketEventChatMessage = {
 export default function chatmessages(data: SocketEventChatMessage) {
     worldTrigger.dispatchTrigger(`socket.client.active.chat.message.${data.message.chat_id}`, data.message)
     worldTrigger.dispatchTrigger('socket.client.chat.update', data.message)
-    retoast({
-        variant: 'info',
-        duration: 0,
-        body: (
-            <div>
-                <small>{data.sender.name}</small>
-                <small>{data.message.description}</small>
-            </div>
-        )
+    toast({
+        bg: 'info',
+        dismissible: true,
+        duration: 10000,
+        header: (
+            <>
+                <img src={data.sender.profile_img} className="rounded me-2" style={{width: 20}}/>
+                <b className="me-auto">{data.sender.name}</b>
+            </>
+        ),
+        body: data.message.description
     })
 }
