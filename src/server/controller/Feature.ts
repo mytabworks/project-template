@@ -319,6 +319,39 @@ class FeaturesController extends BaseController {
         }
     }
 
+    public static async seenmessages(request: NextApiRequestWithSession, response: NextApiResponse<any>) {
+        const cp = new ConnectionPool()
+
+        try {
+
+            await cp.open()
+
+            const session = request.session
+
+            const params = request.query
+
+            await (ChatMessage
+                .where('seen', false)
+                .where('user_id', '!=', session?.user.id)
+                .where('chat_id', params.chat_id) as any)
+                .update({ seen: true })
+
+            response.status(200).json({
+                success: true
+            })
+
+        } catch (error: any) {
+            
+            return response.status(500).json({
+                success: false,
+                message: error.message
+            })
+        } finally {
+
+            await cp.close()
+        }
+    }
+
     public static async sendmessage(request: NextApiRequestWithSession, response: NextApiResponse<any>) {
         const session = request.session
         const socket = request.socket.server.io
