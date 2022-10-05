@@ -64,7 +64,7 @@ class ClientMiddleware {
 		} 
 	}
 
-	public auth(callback?: (context: any, session: Session | null) => ({props: any})) {
+	public auth<SSProps = Record<string, any>>(callback?: (context: any, session: Session | null) => ({props: SSProps})) {
 
 		return async (context: any) => {
 
