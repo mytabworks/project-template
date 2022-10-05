@@ -1,0 +1,22 @@
+.modal {
+    .modal-content {
+        .modal-header {
+            .close.other-action {
+                background: none; 
+                line-height: 1; 
+                font-size: 22px;
+                margin-top: -2px;
+                margin-bottom: -2px;
+
+                * {
+                    font-size: inherit;
+                    color: inherit;
+                }
+
+                &:hover {
+                    color: inherit;
+                }
+            }
+        }
+    }
+}

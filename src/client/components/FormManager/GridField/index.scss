@@ -1,0 +1,99 @@
+.grid-field {
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: auto;
+    
+    table {
+        border: 1px solid #eaedf2;
+        
+        th, td {
+            vertical-align: middle;
+        }
+
+        .action-column {
+            text-align: center; 
+            width: 95px;
+        }
+
+        td {
+            .btn {
+                padding: 0.55rem;
+    
+                > * {
+                    color: inherit;
+                    font-size: 16px;
+                }
+            }
+
+            .action-cell {
+                display: flex;
+
+                :first-child {
+                    margin-left: auto;
+                }
+            }
+        }
+
+        .facade {
+            &:not(.no-margin-rowlist) .facade-description > ul {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+
+            .facade-description > ul {
+                > li {
+                    list-style: none;
+                    height: 16px;
+                    border-radius: 5px;
+                }
+            }
+        }
+
+        .grid-field-item-grab {
+            padding: 0.5em !important;
+            color: #8a8a8a;
+            flex: 0 !important;
+            cursor: grab;
+        }
+    }
+
+    .is-grabbed {
+        cursor: grabbing;
+        box-shadow: 0 0 20px 5px rgba($color: #000000, $alpha: 0.05);
+
+        
+
+        &.grid-field-item {
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+            td {
+
+                &.grid-field-item-grab {
+                    padding: 0.5em !important;
+                    color: #8a8a8a !important;
+                    flex: 0 !important;
+                }
+
+                font-size: 14px;
+                padding: 0.5em 0.75rem;
+                vertical-align: middle;
+                flex: 1;
+
+                p {
+                    margin-bottom: 0;
+                }
+
+                .action-cell {
+                    display: flex;
+
+                    :first-child {
+                        margin-left: auto;
+                    }
+                }
+            }
+        }
+    }
+}

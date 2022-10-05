@@ -1,0 +1,28 @@
+.skeleton-placeholder {
+    width: 100%;
+    height: 16px;
+    background: linear-gradient(90deg, #e8e7e7 24%, #f4f4f4 38%, #e8e7e7 65%);
+    background-size: 400% 100%;
+
+    &.slant {
+        background: linear-gradient(135deg, #e8e7e7 35%, #f4f4f4 50%, #e8e7e7 70%);
+    }
+    
+    &:not(.no-margin) {
+        margin-bottom: 15px;
+    }
+
+    &.animated {
+		animation: skeleton-placeholder 2s ease infinite !important;
+
+		@keyframes skeleton-placeholder {
+			from {
+				background-position: 100% 100%;
+			}
+		
+			to {
+				background-position: 0 50%;
+			}
+		}
+	}
+}

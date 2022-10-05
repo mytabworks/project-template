@@ -1,0 +1,97 @@
+.modal-carousel {
+
+    .modal-dialog {
+        margin: 0;
+        max-width: 100%;
+        height: 100%;
+        transform: translate(0, 0) !important;
+
+        .modal-content {
+            position: relative;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba($color: #000000, $alpha: 0.5);
+            border-radius: 0;
+
+            .modal-carousel-close {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                z-index: 1000;
+                appearance: none;
+                background-color: transparent;
+                border: 0;
+
+                i {
+                    font-size: 40px;
+                    color: #fff;
+                }
+                
+                &:hover i {
+                    font-size: 45px;
+                }
+            }
+
+            .carousel {
+                height: 100%;
+
+                .carousel-inner {
+                    height: 100%;
+                }
+
+                .carousel-item {
+                    height: 100%;
+                    
+                    .item-content {
+                        position: relative;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        .loader-spinner {
+                            background-color: transparent;
+                            
+                            .loader-content .spinner-border {
+                                border-color: #fff;
+                                border-left-color: transparent;
+                            }
+                        }
+
+                        img {
+                            max-height: 100%;
+                            max-width: 100%;
+                        }
+
+                        iframe {
+                            background-color: #eee;
+                            width: 80%;
+                            height: 80%;
+                        }
+    
+                        video {
+                            max-height: 80%;
+                            max-width: 80%;
+                        }
+                        
+                        .not-image * {
+                            font-size: 100px;
+                            color: #fff;
+                        }
+
+                        .item-caption {
+                            position: absolute;
+                            left: 0;
+                            bottom: 50px;
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

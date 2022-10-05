@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import Draggerjs from 'draggerjs'
 import browserAgent from '../../utils/browserAgent'
-import './index.scss'
+// import './index.scss'
 
 export type UseGridSwitchingProps ={
     orderFieldName?: string;

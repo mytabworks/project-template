@@ -1,0 +1,163 @@
+.modal-preview {
+
+    .modal-dialog {
+        margin: 0;
+        max-width: 100%;
+        height: 100%;
+        transform: translate(0, 0) !important;
+
+        .modal-content {
+            position: relative;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba($color: #000000, $alpha: 0.5);
+            border-radius: 0;
+
+            .preview-item-header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                padding: 15px 15px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 1;
+
+                .preview-item-name {
+                    color: #fff;
+                    text-shadow: 0px 0px 20px #000;
+
+                    p {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .preview-item-actions {
+                    display: flex;
+                    align-items: center;
+
+                    button {
+                        background-color: transparent;
+                        border: 0;
+                        appearance: none;
+                        color: #fff;
+                        outline: none;
+                        text-shadow: 0px 0px 20px #000;
+                        display: inline-flex;
+                        align-items: center;
+
+                        i {
+                            font-size: 40px;
+                        }
+                        
+                        &:hover i {
+                            font-size: 45px;
+                        }
+
+                        &[title="download"], &[title^="zoom"] {
+                            i {
+                                font-size: 32px;
+                            }
+
+                            &:hover i {
+                                font-size: 37px;
+                            }
+                        }
+
+                        &:not(:last-child) {
+                            margin-right: 15px;
+                        }
+
+                        @media (max-width: 576px) {
+                            i {
+                                font-size: 20px;
+                            }
+                            
+                            &:hover i {
+                                font-size: 25px;
+                            }
+    
+                            &[title="download"], &[title^="zoom"] {
+                                i {
+                                    font-size: 18px;
+                                }
+    
+                                &:hover i {
+                                    font-size: 22px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .container-fluid {
+                padding-top: 60px;
+                padding-bottom: 15px;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                &.is-image {
+                    padding: 0 !important;
+                }
+
+                @media (min-width: 992px) {
+                    padding-bottom: 25px;
+                }
+
+                .preview-item {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    overflow: hidden;
+
+                    &.is-grabbable {
+                        cursor: grab;
+                    }
+
+                    &.is-grabbable.is-grabbing {
+                        cursor: grabbing;
+                    }
+
+                    .loader-spinner {
+                        background-color: transparent;
+                        
+                        .loader-content .spinner-border {
+                            border-color: #fff;
+                            border-left-color: transparent;
+                        }
+                    }
+
+                    iframe {
+                        background-color: #eee;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    video {
+                        max-height: 100%;
+                        max-width: 100%;
+                    }
+
+                    img {
+                        max-height: 100%;
+                        max-width: 100%;
+                    }
+                    
+                    .not-image * {
+                        font-size: 100px;
+                        color: #fff;
+                    }
+                }
+            }
+
+        }
+    }
+}
