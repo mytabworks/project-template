@@ -4,8 +4,9 @@ import Layout from '@client/components/custom/Layout'
 import UserInteractionChecker from '@client/components/UserInteractionChecker'
 import SocketClient from '@client/components/SocketClient';
 import SSRProvider from 'react-bootstrap/SSRProvider'
-import 'retoast/dist/css/main.css'
 import '@client/assets/styles/bootstrap-theme.scss'
+import 'react-bootstrap-toast/dist/css/style.css'
+import '@client/components/all.scss'
 import '@client/assets/styles/globals.css'
 import '@client/pwa-update'
 
