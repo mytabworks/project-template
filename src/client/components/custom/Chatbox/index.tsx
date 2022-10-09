@@ -1,16 +1,18 @@
 import { useAPI } from '@client/common/hooks/useAPI'
 import { useWorldTrigger } from '@client/common/hooks/useWorldTrigger';
-import React, { useEffect, useState } from 'react'
+import { uniqueData } from '@client/common/utils/data';
+import type { SocketEventChatTyping } from '@server/socket';
+import React, { useEffect, useMemo, useState } from 'react'
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
 import messages from 'src/pages/api/feature/chat/messages';
 import ChatRoom from './ChatRoom';
-import style from './index.module.scss'
-import SearchChat from './SearchChat';
+import ChatSearch from './ChatSearch';
 
 type StateProps = {
     active_chat: null | Record<string, any>;
     chats: Record<string, any>[];
+    chat_replyings: Record<string, SocketEventChatTyping[]>;
 }
 
 interface ChatboxProps {
@@ -18,9 +20,14 @@ interface ChatboxProps {
 }
 
 const Chatbox: React.FunctionComponent<ChatboxProps> = (props) => {
-    const [{active_chat, chats}, setStates] = useState<StateProps>({
+    const [{
+        active_chat, 
+        chats,
+        chat_replyings
+    }, setStates] = useState<StateProps>({
         active_chat: null,
-        chats: [] 
+        chats: [],
+        chat_replyings: {}
     })
     const requestChats = useAPI('/api/feature/chat', { method: "GET" })
 
@@ -68,11 +75,47 @@ const Chatbox: React.FunctionComponent<ChatboxProps> = (props) => {
         })
     }, [])
 
+    // user is typing
+    useWorldTrigger(`socket.client.chat.typing`, (data: SocketEventChatTyping) => {
+        
+        setStates(prev => {
+
+            const update_chat_replyings = {...prev.chat_replyings}
+
+            if(update_chat_replyings[data.chat_id]) {
+
+                const update_replys = uniqueData('user_id', prev.chat_replyings[data.chat_id]).filter((each) => each.user_id === data.user_id && data.typing === true)
+
+                update_chat_replyings[data.chat_id] = data.typing === true ? [...update_replys, data] : update_replys
+
+            } else {
+                update_chat_replyings[data.chat_id] = [data]
+            }
+
+            return {
+                ...prev,
+                chat_replyings: update_chat_replyings
+            }
+        })
+    }, [])
+
+    const handleChatSeen = (chat: Record<string, any>) => {
+        setStates(prev => {
+            const update_chats = prev.chats.filter(each => each.id !== chat.id)
+
+            const update_active_chat = {...chat, messages: []}
+
+            return {...prev, active_chat: update_active_chat, chats: [...update_chats, update_active_chat]}
+        })
+    }
+
+    useWorldTrigger('chat.message.seen', handleChatSeen, [])
+
     return (
-        <div className={style['chat-box']}>
-            <div className={style['chat-box-users']}>
+        <div className="chat-box">
+            <div className="chat-box-users">
                 <div className="d-flex justify-content-end">
-                    <SearchChat/>
+                    <ChatSearch/>
                 </div>
                 <ListGroup as="ul">
                     {chats?.map((chat: any) => {
@@ -83,27 +126,19 @@ const Chatbox: React.FunctionComponent<ChatboxProps> = (props) => {
                                 as="li"
                                 className="d-flex justify-content-between align-items-start"
                             >
-                                <a href={`#${chat.id}`} className="fw-bold" onClick={() => {
-
-                                    setStates(prev => {
-                                        const update_chats = prev.chats.filter(each => each.id !== chat.id)
-
-                                        const update_active_chat = {...chat, messages: []}
-
-                                        return {...prev, active_chat: update_active_chat, chats: [...update_chats, update_active_chat]}
-                                    })
-                                }}>{chat.users[0]?.name}</a>
+                                <a href={`#${chat.id}`} className="fw-bold" onClick={() => handleChatSeen(chat)}>{chat.users[0]?.name}</a>
                                 {unseenMessages > 0 && (
                                     <Badge bg="primary" pill>
                                         {unseenMessages}
                                     </Badge>
                                 )}
+                                {(chat_replyings[active_chat?.id] || []).length > 0 && "⋯"}
                             </ListGroup.Item>
                         )
                     })}
                 </ListGroup>
             </div>
-            <ChatRoom chat={active_chat}/>
+            <ChatRoom chat={active_chat} userReplyings={chat_replyings[active_chat?.id]}/>
         </div>
     )
 }

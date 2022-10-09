@@ -22,28 +22,28 @@
 
         &-header, &-body, &-footer {
             background-color: #fff;
+            padding: 10px 25px;
         }
 
         &-header {
             height: 50px;
-            padding: 10px 15px;
         }
 
         &-body {
             height: 100%;
-            padding: 10px 15px;
             overflow-y: auto;
             overflow-x: hidden;
         }
 
         &-footer {
-            height: 50px;
+            min-height: 50px;
+            padding-bottom: 20px;
         }
 
         &-message-block {
             display: flex;
             margin-bottom: 10px;
-
+            align-items: center;
         }
 
         &-message-me {
@@ -61,6 +61,13 @@
             border-radius: 5px;
             color: #fff;
             font-size: 13px;
+
+            &-status {
+                width: 15px;
+                height: 15px;
+                background-color: #bfc3c7;
+                margin-left: 5px;
+            }
         }
     }
 }

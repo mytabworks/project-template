@@ -5,11 +5,11 @@ import { Dropdown, Form } from 'react-bootstrap'
 import { dispatchTrigger } from 'world-trigger/esm'
 import Toggle from './Toggle'
 
-interface SearchChatProps {
+interface ChatSearchProps {
     
 }
 
-const SearchChat: React.FunctionComponent<SearchChatProps> = (props) => {
+const ChatSearch: React.FunctionComponent<ChatSearchProps> = (props) => {
     const [search, setSearch] = useState<string>('')
     const request = useAPI('/api/user', { method: "GET" })
     const requestCreateChat = useAPI('/api/feature/chat/create')
@@ -58,4 +58,4 @@ const SearchChat: React.FunctionComponent<SearchChatProps> = (props) => {
     )
 }
 
-export default SearchChat
+export default ChatSearch
